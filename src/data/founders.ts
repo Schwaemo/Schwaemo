@@ -1,4 +1,4 @@
-import shanilPhoto from "../../Shanil photo.jpeg";
+import shanilPhoto from "@/assets/founders/shanil-shah.jpeg";
 
 export interface Founder {
   slug: string;

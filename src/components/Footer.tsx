@@ -1,5 +1,5 @@
 import { Github } from "lucide-react";
-import logo from "/assets/logo.png";
+import logo from "@/assets/branding/logo.png";
 
 const Footer = () => {
   const socialLinks = [

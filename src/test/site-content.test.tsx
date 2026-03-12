@@ -84,6 +84,20 @@ describe("project data", () => {
     expect(huggingbox).toBeDefined();
     expect(huggingbox?.featured).toBe(true);
   });
+
+  it("uses project-specific tags instead of labeling everything as AI", () => {
+    const tldr = projects.find((project) => project.slug === "tldr");
+    const trustMeBro = projects.find((project) => project.slug === "trust-me-bro");
+    const huggingbox = projects.find((project) => project.slug === "huggingbox");
+
+    expect(tldr?.tags).toContain("NLP");
+    expect(tldr?.tags).not.toContain("AI");
+
+    expect(trustMeBro?.tags).toContain("AI");
+
+    expect(huggingbox?.tags).toContain("ML");
+    expect(huggingbox?.tags).not.toContain("AI");
+  });
 });
 
 describe("showcase page", () => {
@@ -118,7 +132,7 @@ describe("project detail hero links", () => {
     expect(scoped.queryByRole("link", { name: /github/i })).not.toBeInTheDocument();
   });
 
-  it("shows GitHub for Trust Me Bro", () => {
+  it("shows GitHub and a live demo for Trust Me Bro", () => {
     renderProjectDetail("trust-me-bro");
 
     const hero = screen
@@ -131,6 +145,10 @@ describe("project detail hero links", () => {
     expect(scoped.getByRole("link", { name: /github/i })).toHaveAttribute(
       "href",
       "https://github.com/Schwaemo/trust-me-bro"
+    );
+    expect(scoped.getByRole("link", { name: /live demo/i })).toHaveAttribute(
+      "href",
+      "https://schwaemo.github.io/trust-me-bro/"
     );
   });
 

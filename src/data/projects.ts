@@ -33,7 +33,7 @@ export const projects: Project[] = [
     title: "tldr",
     description: "Client-side reading simplifier with optional AI help",
     pitch: "Paste dense text, get readability insights, and opt into AI simplification one paragraph at a time.",
-    tags: ["Reading", "Productivity", "AI"],
+    tags: ["Reading", "Productivity", "NLP"],
     status: "mvp",
     featured: true,
     color: "yellow",
@@ -62,6 +62,7 @@ export const projects: Project[] = [
     color: "electric-blue",
     links: {
       github: "https://github.com/Schwaemo/trust-me-bro",
+      demo: "https://schwaemo.github.io/trust-me-bro/",
     },
     problem: "Search is increasingly split between AI answers you cannot inspect and result pages that make verification slow. The gap between summary and source is where trust breaks down.",
     approach: [
@@ -79,7 +80,7 @@ export const projects: Project[] = [
     title: "HuggingBox",
     description: "Early desktop app for browsing and managing local model workflows",
     pitch: "A Tauri desktop shell for exploring models, checking system readiness, and organizing local AI tooling.",
-    tags: ["Desktop", "Tauri", "AI"],
+    tags: ["Desktop", "Tauri", "ML"],
     status: "tbd",
     featured: true,
     color: "teal",
