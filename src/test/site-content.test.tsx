@@ -40,13 +40,14 @@ const renderShowcasePage = () =>
   );
 
 describe("founders page", () => {
-  it("renders the founders with Shanil's photo and no email links", () => {
+  it("renders the founders with their photos and no email links", () => {
     renderFoundersPage();
 
     expect(screen.getByText("Shanil Shah")).toBeInTheDocument();
     expect(screen.getByText("Tejas Gharat")).toBeInTheDocument();
     expect(screen.getByAltText("Shanil Shah portrait")).toBeInTheDocument();
-    expect(screen.getAllByText(/photo coming soon/i)).toHaveLength(1);
+    expect(screen.getByAltText("Tejas Gharat portrait")).toBeInTheDocument();
+    expect(screen.queryByText(/photo coming soon/i)).not.toBeInTheDocument();
     expect(document.querySelectorAll('a[href^="mailto:"]')).toHaveLength(0);
 
     founders.forEach((founder) => {
