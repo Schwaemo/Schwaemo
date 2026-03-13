@@ -46,10 +46,10 @@ export const projects: Project[] = [
       "Added whole-text and per-paragraph assistance so simplification is opt-in instead of all-or-nothing.",
       "Kept the product client-side-first so the default experience stays lightweight and private.",
     ],
-    techStack: ["Next.js", "React", "TypeScript", "AI Text Processing"],
+    techStack: ["Next.js", "React", "TypeScript", "Wink NLP tokenisation"],
     learned: "Reading products feel more trustworthy when AI is optional and scoped. Giving users paragraph-level control makes the workflow easier to adopt than rewriting everything up front.",
     nextSteps: ["Expand file and PDF workflows", "Ship stronger extension-to-web continuity"],
-    createdAt: "2024-01-20",
+    createdAt: "2026-01-20",
   },
   {
     slug: "trust-me-bro",
@@ -80,7 +80,7 @@ export const projects: Project[] = [
     title: "HuggingBox",
     description: "Early desktop app for browsing and managing local model workflows",
     pitch: "A Tauri desktop shell for exploring models, checking system readiness, and organizing local AI tooling.",
-    tags: ["Desktop", "Tauri", "ML"],
+    tags: ["Desktop", "ML"],
     status: "tbd",
     featured: true,
     color: "teal",
@@ -95,7 +95,7 @@ export const projects: Project[] = [
     techStack: ["Tauri", "React", "TypeScript", "Zustand", "Monaco"],
     learned: "Desktop AI tools need clear machine-state feedback. Without that grounding, even a polished UI still feels like a thin wrapper over a pile of scripts.",
     nextSteps: ["Connect more of the model management flow end to end", "Define the execution experience beyond the current shell"],
-    createdAt: "2024-02-20",
+    createdAt: "2026-03-10",
   },
 ];
 
