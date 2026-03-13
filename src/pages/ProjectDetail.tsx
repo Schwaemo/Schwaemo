@@ -102,7 +102,7 @@ const ProjectDetail = () => {
                   className="neo-btn bg-foreground text-card"
                 >
                   <ExternalLink size={20} className="mr-2" />
-                  Live Demo
+                  Visit Site
                 </a>
               )}
             </div>
