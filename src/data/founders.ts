@@ -1,4 +1,5 @@
 import shanilPhoto from "@/assets/founders/shanil-shah.jpeg";
+import tejasPhoto from "@/assets/founders/tejas-gharat.jpg";
 
 export interface Founder {
   slug: string;
@@ -50,5 +51,6 @@ export const founders: Founder[] = [
       linkedin: "https://www.linkedin.com/in/tejas-gharat-359629237",
     },
     accentColor: "magenta",
+    photoSrc: tejasPhoto,
   },
 ];
