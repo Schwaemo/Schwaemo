@@ -2,6 +2,7 @@ import { Github, Linkedin } from "lucide-react";
 import Layout from "@/components/Layout";
 import TechChip from "@/components/TechChip";
 import { founders, Founder } from "@/data/founders";
+import duoPhoto from "@/assets/founders/duo.jpg";
 
 const colorClasses: Record<Founder["accentColor"], string> = {
   cyan: "bg-cyan",
@@ -27,12 +28,26 @@ const Founders = () => {
       {/* Header */}
       <section className="border-b-[3px] border-foreground">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="font-display text-5xl md:text-6xl font-bold mb-4">
-            FOUNDERS
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            Two builders shaping Schwaemo across AI, systems, and product experiments.
-          </p>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
+            <div>
+              <h1 className="font-display text-5xl md:text-6xl font-bold mb-4">
+                FOUNDERS
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-3xl">
+                Two builders shaping Schwaemo across AI, systems, and product experiments.
+              </p>
+            </div>
+
+            <div className="justify-self-start lg:justify-self-end">
+              <div className="w-full max-w-sm border-brutal bg-yellow p-3 shadow-brutal-sm">
+                <img
+                  src={duoPhoto}
+                  alt="Shanil Shah and Tejas Gharat"
+                  className="aspect-[4/3] w-full border-brutal object-cover"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
