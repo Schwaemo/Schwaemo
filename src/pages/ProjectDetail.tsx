@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, Github, ExternalLink, Image } from "lucide-react
 import Layout from "@/components/Layout";
 import StatusBadge from "@/components/StatusBadge";
 import TechChip from "@/components/TechChip";
+import { founders } from "@/data/founders";
 import { projects, getProjectBySlug, Project } from "@/data/projects";
 
 const colorClasses: Record<Project["color"], string> = {
@@ -45,6 +46,9 @@ const ProjectDetail = () => {
   const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
   const nextProject =
     currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
+  const creditedFounders = founders.filter((founder) =>
+    founder.creditedProjectSlugs.includes(project.slug)
+  );
 
   return (
     <Layout>
@@ -173,6 +177,30 @@ const ProjectDetail = () => {
 
             {/* Sidebar */}
             <div className="space-y-6">
+              {creditedFounders.length > 0 && (
+                <div className="neo-card p-6">
+                  <h3 className="font-display text-lg font-bold mb-4">
+                    Led by
+                  </h3>
+                  <div className="space-y-3">
+                    {creditedFounders.map((founder) => (
+                      <Link
+                        key={founder.slug}
+                        to="/founders"
+                        className="block border-brutal bg-card p-3 transition-transform hover:-translate-y-1"
+                      >
+                        <p className="font-display text-lg font-bold">
+                          {founder.name}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {founder.role}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Tech Stack */}
               <div className="neo-card p-6">
                 <h3 className="font-display text-lg font-bold mb-4">
@@ -185,15 +213,24 @@ const ProjectDetail = () => {
                 </div>
               </div>
 
-              {/* Image Placeholder */}
-              <div className="neo-card aspect-video flex items-center justify-center bg-muted">
-                <div className="text-center text-muted-foreground">
-                  <Image size={48} className="mx-auto mb-2" />
-                  <p className="font-display font-semibold">
-                    Image/Gallery Placeholder
-                  </p>
+              {project.imageSrc ? (
+                <div className="neo-card overflow-hidden bg-muted">
+                  <img
+                    src={project.imageSrc}
+                    alt={project.imageAlt || `${project.title} project preview`}
+                    className="aspect-video w-full object-cover"
+                  />
                 </div>
-              </div>
+              ) : (
+                <div className="neo-card aspect-video flex items-center justify-center bg-muted">
+                  <div className="text-center text-muted-foreground">
+                    <Image size={48} className="mx-auto mb-2" />
+                    <p className="font-display font-semibold">
+                      Image/Gallery Placeholder
+                    </p>
+                  </div>
+                </div>
+              )}
 
               {/* Tags */}
               <div className="neo-card p-6">

@@ -3,7 +3,7 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Footer from "@/components/Footer";
 import { founders } from "@/data/founders";
-import { getFeaturedProjects, projects } from "@/data/projects";
+import { getFeaturedProjects, getProjectBySlug, projects } from "@/data/projects";
 import Founders from "@/pages/Founders";
 import ProjectDetail from "@/pages/ProjectDetail";
 import Showcase from "@/pages/Showcase";
@@ -64,6 +64,14 @@ describe("founders page", () => {
         founder.links.linkedin
       );
       expect(scoped.queryByRole("link", { name: /email/i })).not.toBeInTheDocument();
+      founder.creditedProjectSlugs.forEach((slug) => {
+        const project = getProjectBySlug(slug);
+        expect(project).toBeDefined();
+        expect(scoped.getByRole("link", { name: new RegExp(project!.title, "i") })).toHaveAttribute(
+          "href",
+          `/projects/${slug}`
+        );
+      });
     });
   });
 });
@@ -149,7 +157,7 @@ describe("project detail hero links", () => {
     );
     expect(scoped.getByRole("link", { name: /live demo/i })).toHaveAttribute(
       "href",
-      "https://schwaemo.github.io/trust-me-bro/"
+      "https://trust-me-bro-schwaemo.vercel.app/"
     );
   });
 
@@ -162,12 +170,60 @@ describe("project detail hero links", () => {
     expect(hero).not.toBeNull();
 
     const scoped = within(hero!);
-    expect(scoped.getByText("TBD")).toBeInTheDocument();
+    expect(scoped.getByText("Prototype")).toBeInTheDocument();
     expect(scoped.getByRole("link", { name: /github/i })).toHaveAttribute(
       "href",
       "https://github.com/Schwaemo/huggingbox"
     );
     expect(scoped.queryByRole("link", { name: /live demo/i })).not.toBeInTheDocument();
+  });
+});
+
+describe("project detail founder credits", () => {
+  it("shows the credited founder above the tech stack for HuggingBox", () => {
+    renderProjectDetail("huggingbox");
+
+    expect(screen.getByRole("heading", { name: /led by/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /tejas gharat/i })).toHaveAttribute(
+      "href",
+      "/founders"
+    );
+    expect(screen.getByRole("heading", { name: /tech stack/i })).toBeInTheDocument();
+  });
+
+  it("shows the credited founder for Trust Me Bro", () => {
+    renderProjectDetail("trust-me-bro");
+
+    expect(screen.getByRole("link", { name: /shanil shah/i })).toHaveAttribute(
+      "href",
+      "/founders"
+    );
+  });
+});
+
+describe("project detail images", () => {
+  it("shows the TLDR project image when an asset exists", () => {
+    renderProjectDetail("tldr");
+
+    expect(
+      screen.getByAltText("TLDR reading simplifier interface")
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/image\/gallery placeholder/i)).not.toBeInTheDocument();
+  });
+
+  it("shows the HuggingBox project image when an asset exists", () => {
+    renderProjectDetail("huggingbox");
+
+    expect(
+      screen.getByAltText("HuggingBox desktop application interface")
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/image\/gallery placeholder/i)).not.toBeInTheDocument();
+  });
+
+  it("keeps the placeholder for projects without an image asset", () => {
+    renderProjectDetail("trust-me-bro");
+
+    expect(screen.getByText(/image\/gallery placeholder/i)).toBeInTheDocument();
   });
 });
 
