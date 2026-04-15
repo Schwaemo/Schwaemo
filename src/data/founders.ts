@@ -1,4 +1,5 @@
 import shanilPhoto from "@/assets/founders/shanil-shah.jpeg";
+import tejasPhoto from "@/assets/founders/tejas-gharat.jpg";
 
 export interface Founder {
   slug: string;
@@ -7,6 +8,7 @@ export interface Founder {
   education: string;
   bio: string;
   skills: string[];
+  creditedProjectSlugs: string[];
   links: {
     github: string;
     linkedin: string;
@@ -30,6 +32,7 @@ export const founders: Founder[] = [
       "2nd year Natural Sciences student at Queens' College, Cambridge, studying physics.",
     bio: "I focus on quantitative problem solving and learning by doing. I regularly take on problems before I fully know how to solve them, then pick up the concepts and tools needed to get the work over the line.",
     skills: ["AI/ML", "Product Development", "Customer Research"],
+    creditedProjectSlugs: ["trust-me-bro"],
     links: {
       github: "https://github.com/s-h-a-n-i-l",
       linkedin: "https://www.linkedin.com/in/shanil-shah-1b4283285/",
@@ -45,10 +48,12 @@ export const founders: Founder[] = [
       "Information and embedded systems engineering student with a full-stack systems focus.",
     bio: "I like building full-stack systems that solve real problems. I am comfortable learning unfamiliar tools quickly and working across software, hardware, and AI-heavy workflows when a project needs it.",
     skills: ["AI/NLP", "Embedded Systems", "Software Engineering"],
+    creditedProjectSlugs: ["tldr", "huggingbox"],
     links: {
       github: "https://github.com/tng4480",
       linkedin: "https://www.linkedin.com/in/tejas-gharat-359629237",
     },
     accentColor: "magenta",
+    photoSrc: tejasPhoto,
   },
 ];
