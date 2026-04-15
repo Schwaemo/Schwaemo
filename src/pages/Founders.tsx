@@ -1,21 +1,10 @@
-import { ArrowRight, Github, Linkedin } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Github, Linkedin } from "lucide-react";
 import Layout from "@/components/Layout";
 import TechChip from "@/components/TechChip";
 import { founders, Founder } from "@/data/founders";
-import { getProjectBySlug } from "@/data/projects";
 import duoPhoto from "@/assets/founders/duo.jpg";
 
 const colorClasses: Record<Founder["accentColor"], string> = {
-  cyan: "bg-cyan",
-  "electric-blue": "bg-electric-blue",
-  yellow: "bg-yellow",
-  orange: "bg-orange",
-  teal: "bg-teal",
-  magenta: "bg-magenta",
-};
-
-const accentChipClasses: Record<Founder["accentColor"], string> = {
   cyan: "bg-cyan",
   "electric-blue": "bg-electric-blue",
   yellow: "bg-yellow",
@@ -66,12 +55,7 @@ const Founders = () => {
       <section className="border-b-[3px] border-foreground">
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {founders.map((founder) => {
-              const creditedProjects = founder.creditedProjectSlugs
-                .map((slug) => getProjectBySlug(slug))
-                .filter((project): project is NonNullable<typeof project> => project !== undefined);
-
-              return (
+            {founders.map((founder) => (
                 <article key={founder.name} className="neo-card overflow-hidden">
                   <div
                     className={`h-5 ${colorClasses[founder.accentColor]} border-b-[3px] border-foreground`}
@@ -138,39 +122,6 @@ const Founders = () => {
                           </div>
                         </div>
 
-                        {creditedProjects.length > 0 && (
-                          <div className="mb-6">
-                            <h3 className="font-display font-bold text-sm uppercase tracking-wide mb-3">
-                              Projects
-                            </h3>
-                            <div className="space-y-3">
-                              {creditedProjects.map((project) => (
-                                <Link
-                                  key={project.slug}
-                                  to={`/projects/${project.slug}`}
-                                  className="block border-brutal bg-card p-3 transition-transform hover:-translate-y-1"
-                                >
-                                  <div className="flex items-start justify-between gap-3">
-                                    <div>
-                                      <p className="font-display text-lg font-bold">
-                                        {project.title}
-                                      </p>
-                                      <p className="text-sm text-muted-foreground">
-                                        {project.description}
-                                      </p>
-                                    </div>
-                                    <span
-                                      className={`mt-1 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center border-brutal ${accentChipClasses[founder.accentColor]}`}
-                                    >
-                                      <ArrowRight size={16} />
-                                    </span>
-                                  </div>
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
                         <div className="flex flex-col sm:flex-row gap-3">
                           <a
                             href={founder.links.github}
@@ -195,8 +146,7 @@ const Founders = () => {
                     </div>
                   </div>
                 </article>
-              );
-            })}
+            ))}
           </div>
         </div>
       </section>

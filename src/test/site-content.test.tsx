@@ -3,7 +3,11 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Footer from "@/components/Footer";
 import { founders } from "@/data/founders";
-import { getFeaturedProjects, getProjectBySlug, projects } from "@/data/projects";
+import {
+  getFeaturedProjects,
+  getProjectBySlug,
+  projects,
+} from "@/data/projects";
 import Founders from "@/pages/Founders";
 import ProjectDetail from "@/pages/ProjectDetail";
 import Showcase from "@/pages/Showcase";
@@ -81,17 +85,40 @@ describe("project data", () => {
     const featuredProjects = getFeaturedProjects();
     const slugs = projects.map((project) => project.slug);
     const huggingbox = projects.find((project) => project.slug === "huggingbox");
+    const clawDm = projects.find((project) => project.slug === "claw-dm");
+    const gameBetMatch = projects.find(
+      (project) => project.slug === "game-bet-match"
+    );
+    const silverTongue = projects.find(
+      (project) => project.slug === "silver-tongue"
+    );
 
     expect(featuredProjects).toHaveLength(3);
     expect(featuredProjects.every((project) => project.featured)).toBe(true);
     expect(featuredProjects.map((project) => project.slug)).toEqual([
       "huggingbox",
-      "trust-me-bro",
       "tldr",
+      "trust-me-bro",
     ]);
     expect(new Set(slugs).size).toBe(slugs.length);
     expect(huggingbox).toBeDefined();
     expect(huggingbox?.featured).toBe(true);
+    expect(clawDm).toBeDefined();
+    expect(clawDm?.featured).toBe(false);
+    expect(clawDm?.status).toBe("in-progress");
+    expect(gameBetMatch).toBeDefined();
+    expect(gameBetMatch?.featured).toBe(false);
+    expect(gameBetMatch?.status).toBe("in-progress");
+    expect(silverTongue).toBeDefined();
+    expect(silverTongue?.featured).toBe(false);
+    expect(silverTongue?.status).toBe("in-progress");
+    expect(featuredProjects.map((project) => project.slug)).not.toContain("claw-dm");
+    expect(featuredProjects.map((project) => project.slug)).not.toContain(
+      "game-bet-match"
+    );
+    expect(featuredProjects.map((project) => project.slug)).not.toContain(
+      "silver-tongue"
+    );
   });
 
   it("uses project-specific tags instead of labeling everything as AI", () => {
@@ -121,12 +148,15 @@ describe("showcase page", () => {
       "/projects/huggingbox",
       "/projects/trust-me-bro",
       "/projects/tldr",
+      "/projects/game-bet-match",
+      "/projects/silver-tongue",
+      "/projects/claw-dm",
     ]);
   });
 });
 
 describe("project detail hero links", () => {
-  it("shows the TLDR live demo without a dead GitHub button", () => {
+  it("shows the TLDR site link without a dead GitHub button", () => {
     renderProjectDetail("tldr");
 
     const hero = screen.getByRole("heading", { name: /tldr/i }).closest("section");
@@ -134,14 +164,14 @@ describe("project detail hero links", () => {
 
     const scoped = within(hero!);
     expect(scoped.getByText("MVP")).toBeInTheDocument();
-    expect(scoped.getByRole("link", { name: /live demo/i })).toHaveAttribute(
+    expect(scoped.getByRole("link", { name: /visit site/i })).toHaveAttribute(
       "href",
       "https://tldr-321914.vercel.app/"
     );
     expect(scoped.queryByRole("link", { name: /github/i })).not.toBeInTheDocument();
   });
 
-  it("shows GitHub and a live demo for Trust Me Bro", () => {
+  it("shows GitHub and a site link for Trust Me Bro", () => {
     renderProjectDetail("trust-me-bro");
 
     const hero = screen
@@ -155,7 +185,7 @@ describe("project detail hero links", () => {
       "href",
       "https://github.com/Schwaemo/trust-me-bro"
     );
-    expect(scoped.getByRole("link", { name: /live demo/i })).toHaveAttribute(
+    expect(scoped.getByRole("link", { name: /visit site/i })).toHaveAttribute(
       "href",
       "https://trust-me-bro-schwaemo.vercel.app/"
     );
@@ -176,6 +206,53 @@ describe("project detail hero links", () => {
       "https://github.com/Schwaemo/huggingbox"
     );
     expect(scoped.queryByRole("link", { name: /live demo/i })).not.toBeInTheDocument();
+  });
+
+  it("shows Claw DM as in progress without GitHub or demo links", () => {
+    renderProjectDetail("claw-dm");
+
+    const hero = screen
+      .getByRole("heading", { name: /claw dm/i })
+      .closest("section");
+    expect(hero).not.toBeNull();
+
+    const scoped = within(hero!);
+    expect(scoped.getByText("In Progress")).toBeInTheDocument();
+    expect(scoped.queryByRole("link", { name: /github/i })).not.toBeInTheDocument();
+    expect(scoped.queryByRole("button", { name: /github/i })).not.toBeInTheDocument();
+    expect(scoped.queryByRole("link", { name: /visit site/i })).not.toBeInTheDocument();
+  });
+
+  it("shows Silver Tongue as in progress without GitHub or demo links", () => {
+    renderProjectDetail("silver-tongue");
+
+    const hero = screen
+      .getByRole("heading", { name: /silver tongue/i })
+      .closest("section");
+    expect(hero).not.toBeNull();
+
+    const scoped = within(hero!);
+    expect(scoped.getByText("In Progress")).toBeInTheDocument();
+    expect(scoped.queryByRole("link", { name: /github/i })).not.toBeInTheDocument();
+    expect(scoped.queryByRole("button", { name: /github/i })).not.toBeInTheDocument();
+    expect(scoped.queryByRole("link", { name: /visit site/i })).not.toBeInTheDocument();
+  });
+
+  it("shows Game Bet Match as in progress with a GitHub link and no demo link", () => {
+    renderProjectDetail("game-bet-match");
+
+    const hero = screen
+      .getByRole("heading", { name: /game bet match/i })
+      .closest("section");
+    expect(hero).not.toBeNull();
+
+    const scoped = within(hero!);
+    expect(scoped.getByText("In Progress")).toBeInTheDocument();
+    expect(scoped.getByRole("link", { name: /github/i })).toHaveAttribute(
+      "href",
+      "https://github.com/s-h-a-n-i-l/tennis_ml"
+    );
+    expect(scoped.queryByRole("link", { name: /visit site/i })).not.toBeInTheDocument();
   });
 });
 
@@ -222,6 +299,24 @@ describe("project detail images", () => {
 
   it("keeps the placeholder for projects without an image asset", () => {
     renderProjectDetail("trust-me-bro");
+
+    expect(screen.getByText(/image\/gallery placeholder/i)).toBeInTheDocument();
+  });
+
+  it("shows the placeholder for Claw DM without adding a new image field", () => {
+    renderProjectDetail("claw-dm");
+
+    expect(screen.getByText(/image\/gallery placeholder/i)).toBeInTheDocument();
+  });
+
+  it("shows the placeholder for Silver Tongue without adding a new image field", () => {
+    renderProjectDetail("silver-tongue");
+
+    expect(screen.getByText(/image\/gallery placeholder/i)).toBeInTheDocument();
+  });
+
+  it("shows the placeholder for Game Bet Match without adding a new image field", () => {
+    renderProjectDetail("game-bet-match");
 
     expect(screen.getByText(/image\/gallery placeholder/i)).toBeInTheDocument();
   });
