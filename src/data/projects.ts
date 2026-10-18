@@ -43,7 +43,8 @@ export const projects: Project[] = [
     featured: true,
     color: "yellow",
     links: {
-      demo: "https://tldr-321914.vercel.app/",
+      demo: "https://tng4480.github.io/tldr/",
+      github: "https://github.com/tng4480/tldr"
     },
     problem: "Long articles are documents are difficult to skim and understand quickly. Most reading assistants utilise LLMs, which runs the risk of hallucination and is not always economical or private. I wanted to create a local reading assistant that would support reading the original document, without oversimplifying it.",
     approach: [
@@ -92,7 +93,7 @@ export const projects: Project[] = [
     featured: true,
     color: "teal",
     links: {
-      github: "https://github.com/Schwaemo/huggingbox",
+      github: "https://github.com/tng4480/huggingbox",
     },
     problem: "I wanted a quick and simple way to explore different OCR and forecasting models. Managing the models, environments and code for them was a pain, and I wanted a dedicated app for it.",
     approach: [
